@@ -1,18 +1,8 @@
-<div>Teachable Machine Audio Model</div>
-<button type="button" onclick="init()">Start</button>
-<div id="label-container"></div>
-<img id="mygif" src="mong.gif" alt="mongche" style="display: none">
-
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-
-<script type="text/javascript">
     // more documentation available at
     // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
 
     // the link to your model provided by Teachable Machine export panel
-    const URL = "https://teachablemachine.withgoogle.com/models/mchhItTXA/";
+    const URL = "https://teachablemachine.withgoogle.com/models/ydki9-B66/";
 
     async function createModel() {
         const checkpointURL = URL + "model.json"; // model topology
@@ -48,23 +38,36 @@
                 const classPrediction = classLabels[i] + ": " + result.scores[i].toFixed(2);
                 labelContainer.childNodes[i].innerHTML = classPrediction;
             }
-            
-            var child1 = $( "#label-container div:nth-child(2)" );
-            var child2 = $( "#label-container div:nth-child(3)" );
-            var target_1 = parseFloat(child1.text().slice(-4));
-            var target_2 = parseFloat(child2.text().slice(-4));
-            
-            //threshhold
-            if(target_2 > 0.9){
-                console.log("PETER called " + target_2);
-                $("#mygif").css("display",'');
-            }
-            
-            if(target_1 > 0.85){
-                console.log("PAN called " + target_1);
-                $("#mygif").css("display","none");
-            }
-            
+			
+			//define child targets
+			var child1 = $( "#label-container div:nth-child(2)" );
+			var child2 = $( "#label-container div:nth-child(3)" );
+			var child3 = $( "#label-container div:nth-child(4)" );
+			
+			//extract decimal from string representing confidence from 0 and 1
+			var target_1 = parseFloat(child1.text().slice(-4));
+			var target_2 = parseFloat(child2.text().slice(-4));
+			var target_3 = parseFloat(child3.text().slice(-4));
+			
+			//Pan called -> reset
+			if(target_1 > 0.85){
+				console.log("PAN called " + target_1);
+				$("#mygif").css("display","none");
+				$("#mygif").css("filter",'');
+			}
+			
+			//Peter called -> peter's gif appears
+			if(target_2 > 0.9){
+				console.log("PETER called " + target_2);
+				$("#mygif").css("display",'');
+			}
+			
+			//Tus called -> inverts color
+			if(target_3 > 0.85){
+				console.log("TUS called " + target_3);
+				$("#mygif").css("filter","invert(100%)");
+			}
+			
         }, {
             includeSpectrogram: true, // in case listen should return result.spectrogram
             probabilityThreshold: 0.75,
@@ -75,4 +78,3 @@
         // Stop the recognition in 5 seconds.
         // setTimeout(() => recognizer.stopListening(), 5000);
     }
-</script>
