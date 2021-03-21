@@ -1,14 +1,26 @@
 <html>
-  <head>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
+<head>
+	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+
+<body>
+<div>Teachable Machine Audio Model</div>
+<div id="label-container"></div>
+<!--<img id="mygif" src="mong.gif" alt="mongche" style="display: none">-->
+
+<a-scene>
     <a-entity camera look-controls position="0 0.6 2"></a-entity>
  <a-entity light="type: ambient; color: #CCC"></a-entity>
         <a-asset-item id="windmill" src="windmill/windmill.gltf"></a-asset-item>
-            <a-gltf-model src="#windmill" position="0 0 0"  scale="0.5 0.5 0.5" rotation="0 0 0"  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000" ></a-gltf-model>
+            <a-gltf-model id="model_id" src="#windmill" position="0 0 0"  scale="0.5 0.5 0.5" rotation="0 0 0"  animation="property: rotation; to: 0 0 0; loop: true; dur: 10000" ></a-gltf-model>
 
 </a-scene>
-  </body>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+
+<script src="ml.js"></script>
+</body>
+
 </html>
